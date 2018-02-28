@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="metafy:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="metafy-1.0.war">
+      <element id="artifact" artifact-name="metafy:war exploded" />
+    </root>
+  </artifact>
+</component>

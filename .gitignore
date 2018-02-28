@@ -7,3 +7,6 @@
 
 # IntelliJ
 out/
+
+# API Keys
+apikeys.yml
