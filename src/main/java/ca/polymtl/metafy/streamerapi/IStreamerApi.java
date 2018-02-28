@@ -6,4 +6,6 @@ package ca.polymtl.metafy.streamerapi;
  */
 public interface IStreamerApi {
 
+    void searchTrack(String trackName);
+
 }

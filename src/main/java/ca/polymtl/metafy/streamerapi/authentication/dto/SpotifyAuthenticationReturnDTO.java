@@ -13,7 +13,7 @@ public class SpotifyAuthenticationReturnDTO {
     @XmlElement(name = "access_token")
     private String accessToken;
 
-    @XmlElement(name = "duration")
+    @XmlElement(name = "expires_in")
     private long duration;
 
     public String getAccessToken() {
