@@ -29,4 +29,12 @@ public class Database {
         this.playlists.add(play1);
         this.playlists.add(play2);
     }
+
+    public void addPlaylist(Playlist p){
+        this.playlists.add(p);
+    }
+
+    public List<Playlist> getDatabase(){
+        return this.playlists;
+    }
 }

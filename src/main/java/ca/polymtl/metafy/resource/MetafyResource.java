@@ -42,6 +42,12 @@ public class MetafyResource {
     @Path("displaytest/")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Test")
-    public Response displaytest() {return Response.status(Response.Status.OK).entity(new Playlist()).build();}
+    public Response displaytest() { return Response.status(Response.Status.OK).entity(new Playlist()).build(); }
+
+    @GET
+    @Path("playlists/")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Playlists")
+    public Response playlists() { return Response.status(Response.Status.OK).entity(database).build(); }
 
 }
