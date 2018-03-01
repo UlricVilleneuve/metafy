@@ -7,17 +7,17 @@ document.getElementById('searchbutton').onclick = function () {
     //let domParser = new DOMParser();
 
     req.onreadystatechange = function () {
-        if(req.readyState !== 4) return;
+        if (req.readyState !== 4) return;
 
-        if(req.status === 200) {
+        if (req.status === 200) {
             console.log(req.responseType + " " + req.response);
             let playlist = JSON.parse(req.response);
             console.log(playlist);
 
             let info = "";
             let i = 1;
-            playlist.tracks.forEach(function (t){
-                info += `Track ${i++} : ${t.name} by ${t.author}, duration : ${t.duration}ms.</br>`;  
+            playlist.tracks.forEach(function (t) {
+                info += `Track ${i++} : ${t.name} by ${t.author}, duration : ${t.duration}ms.</br>`;
             });
             console.log(info);
             document.getElementById('info').innerHTML = info;

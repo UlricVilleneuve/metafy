@@ -9,7 +9,7 @@ req.onreadystatechange = function () {
 
     if (req.status === 200) {
         console.log(req.responseType + " " + req.response);
-        
+
         let db = JSON.parse(req.response);
         let playlists = db.playlists;
         console.log(playlists);
