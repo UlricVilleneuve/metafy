@@ -1,7 +1,5 @@
 package ca.polymtl.metafy.streamerapi.authentication;
 
-import ca.polymtl.metafy.ApiKeyLoader;
-import ca.polymtl.metafy.ApiKeyNotFoundException;
 import ca.polymtl.metafy.streamerapi.authentication.dto.SpotifyAuthenticationReturnDTO;
 
 import javax.ws.rs.client.*;
@@ -10,6 +8,10 @@ import javax.ws.rs.core.MediaType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This Singleton is used to authenticate to the Spotify Web API and retrieve the token.
+ * @author wmouchere
+ */
 public class SpotifyAuthenticator implements IAuthenticator {
 
     private static SpotifyAuthenticator instance = null;
@@ -32,6 +34,10 @@ public class SpotifyAuthenticator implements IAuthenticator {
         refreshToken();
     }
 
+    /**
+     * Get the SpotifyAuthenticator service instance. Instance is lazy initialized.
+     * @return The SpotifyAuthenticator service instance
+     */
     public static SpotifyAuthenticator getInstance() {
         if(instance == null)
             instance = new SpotifyAuthenticator();

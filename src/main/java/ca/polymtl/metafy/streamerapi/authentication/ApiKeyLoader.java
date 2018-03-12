@@ -1,4 +1,4 @@
-package ca.polymtl.metafy;
+package ca.polymtl.metafy.streamerapi.authentication;
 
 import org.glassfish.jersey.internal.util.Base64;
 import org.yaml.snakeyaml.Yaml;
