@@ -7,6 +7,7 @@
 
 # IntelliJ
 out/
+target/
 
 # API Keys
 apikeys.yml
