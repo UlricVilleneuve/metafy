@@ -1,10 +1,10 @@
-package ca.polymtl.metafy;
+package ca.polymtl.metafy.streamerapi.spotify.dto;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class TrackReturnDTO {
+public class SpotifyTrackReturnDTO {
 
     @XmlElement(name = "name")
     private String trackName;
@@ -22,7 +22,7 @@ public class TrackReturnDTO {
 
     @Override
     public String toString() {
-        return "TrackReturnDTO{" +
+        return "SpotifyTrackReturnDTO{" +
                 "trackName='" + trackName + '\'' +
                 ", trackURL='" + trackURL + '\'' +
                 '}';
