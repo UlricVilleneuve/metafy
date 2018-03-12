@@ -1,33 +1,26 @@
 package ca.polymtl.metafy.music;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by Maxence on 28/02/2018.
+ * @author Maxence, wmouchere
  * This class represent the tracks researched by the user.
  * It is used to display the result of a search or the content of a playlist.
  */
-
-@XmlRootElement
 public class Track {
 
-    @XmlElement(name = "name")
     private String name;
-    @XmlElement(name = "author")
     private String author;
-    @XmlElement(name = "duration")
+    private String url;
     private long duration;
+    private String origin;
 
-    // Empty default constructor necessary for JSON marshalling
-    public Track(){
-
-    }
-
-    public Track(String name, String author, long duration){
+    public Track(String name, String author, String url, long duration, String origin){
         this.name = name;
         this.author = author;
+        this.url = url;
         this.duration = duration;
+        this.origin = origin;
     }
 
     public String getName(){
@@ -38,7 +31,15 @@ public class Track {
         return this.author;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     public long getDuration(){
         return this.duration;
+    }
+
+    public String getOrigin() {
+        return origin;
     }
 }

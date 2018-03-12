@@ -1,14 +1,19 @@
 package ca.polymtl.metafy.streamerapi.spotify;
 
+import ca.polymtl.metafy.music.Track;
 import ca.polymtl.metafy.streamerapi.IStreamerApi;
 import ca.polymtl.metafy.streamerapi.authentication.IAuthenticator;
 import ca.polymtl.metafy.streamerapi.authentication.SpotifyAuthenticator;
-import ca.polymtl.metafy.streamerapi.spotify.dto.SpotifySearchReturnDTO;
+import ca.polymtl.metafy.streamerapi.spotify.dto.SpotifySearchRetrieveDTO;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * This class is a Singleton used to make HTTP queries to the Spotify Web API.
@@ -17,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 public class SpotifyApi implements IStreamerApi {
 
     private static SpotifyApi instance = null;
+    private static final Logger LOGGER = Logger.getLogger(SpotifyApi.class.getName());
 
     private IAuthenticator authenticator;
     private Client client;
@@ -36,14 +42,17 @@ public class SpotifyApi implements IStreamerApi {
         return instance;
     }
 
-    public void searchTrack(String trackName) {
+    public List<Track> searchTrack(String queryString) {
         WebTarget resource = client.target("https://api.spotify.com/v1/search")
-                .queryParam("q", trackName)
+                .queryParam("q", queryString)
                 .queryParam("type", "track")
                 .queryParam("limit", "10");
-        SpotifySearchReturnDTO response = resource.request(MediaType.APPLICATION_JSON)
+        SpotifySearchRetrieveDTO response = resource.request(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + authenticator.getToken())
-                .get(SpotifySearchReturnDTO.class);
-        System.out.println(response);
+                .get(SpotifySearchRetrieveDTO.class);
+        LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Spotify API, response was " + response);
+        return response.getTracksReturnDTO().getItems().stream()
+                .map(item -> new Track(item.getTrackName(), item.getArtists().get(0).getName(), item.getTrackURL(), item.getTrackDuration(), "Spotify"))
+                .collect(Collectors.toList());
     }
 }

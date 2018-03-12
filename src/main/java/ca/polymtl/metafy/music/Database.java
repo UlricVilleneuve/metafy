@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Maxence on 28/02/2018.
+ * @author Maxence
  * Dummy class to create some Tracks and Playlists for test purpose
  * Will be deleted in a near futur
  */
@@ -19,12 +19,12 @@ public class Database {
     public Database(){
         this.playlists = new ArrayList<Playlist>();
         Playlist play1 = new Playlist("Playlist Ed Sheeran");
-        play1.addTrack(new Track("Galway Girl","Ed Sheeran",(3*60+20)*100));
-        play1.addTrack(new Track("Perfect","Ed Sheeran",(4*60+10)*100));
+        play1.addTrack(new Track("Galway Girl","Ed Sheeran","http://foo.bar",(3*60+20)*100, "raw"));
+        play1.addTrack(new Track("Perfect","Ed Sheeran","http://foo.bar",(4*60+10)*100, "raw"));
 
         Playlist play2 = new Playlist("Playlist ACDC");
-        play2.addTrack(new Track("ThunderStruck","AC/DC",(3*60+50)*100));
-        play2.addTrack(new Track("Back in Black","AC/DC",(4*60+40)*100));
+        play2.addTrack(new Track("ThunderStruck","AC/DC","http://foo.bar",(3*60+50)*100, "raw"));
+        play2.addTrack(new Track("Back in Black","AC/DC","http://foo.bar",(4*60+40)*100, "raw"));
 
         this.playlists.add(play1);
         this.playlists.add(play2);
