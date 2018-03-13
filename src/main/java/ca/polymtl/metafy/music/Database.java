@@ -1,5 +1,7 @@
 package ca.polymtl.metafy.music;
 
+import ca.polymtl.metafy.music.dto.PlaylistSendDTO;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -13,10 +15,12 @@ import java.util.List;
 @XmlRootElement
 public class Database {
 
-    @XmlElement
     private List<Playlist> playlists;
+    @XmlElement
+    private List<PlaylistSendDTO> dtos;
 
     public Database(){
+        this.dtos = new ArrayList<>();
         this.playlists = new ArrayList<Playlist>();
         Playlist play1 = new Playlist("Playlist Ed Sheeran");
         play1.addTrack(new Track("Galway Girl","Ed Sheeran","http://foo.bar",(3*60+20)*100, "raw"));
@@ -28,6 +32,8 @@ public class Database {
 
         this.playlists.add(play1);
         this.playlists.add(play2);
+
+        for(Playlist p : playlists) dtos.add(new PlaylistSendDTO(p));
     }
 
     public void addPlaylist(Playlist p){
@@ -36,5 +42,9 @@ public class Database {
 
     public List<Playlist> getDatabase(){
         return this.playlists;
+    }
+
+    public List<PlaylistSendDTO> getDatabaseDTO(){
+        return this.dtos;
     }
 }

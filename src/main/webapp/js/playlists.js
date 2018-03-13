@@ -11,7 +11,7 @@ req.onreadystatechange = function () {
         console.log(req.responseType + " " + req.response);
 
         let db = JSON.parse(req.response);
-        let playlists = db.playlists;
+        let playlists = db.dtos;
         console.log(playlists);
 
         let info = "";
