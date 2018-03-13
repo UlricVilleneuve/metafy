@@ -1,10 +1,10 @@
 "use strict"
 let server = "http://localhost:8080/api/";
 
-document.getElementById('searchbutton').onclick = function(){
+/*document.getElementById('searchbutton').onclick = function(){
     submit();
 }
-
+*/
 document.getElementById('querry').onkeydown = function(e){
     if(e.keyCode == 13){
       submit()
@@ -29,8 +29,8 @@ document.getElementById('querry').onkeydown = function(e){
             info += `<h1>Results</h1>`
             info += `<ol>`
             tracks.forEach(function (t) {
-                info += `<li>${t.name} by ${t.author},
-                        duration : ${Math.floor(t.duration/60000)}min${Math.floor(t.duration%60000/1000)}s.
+                info += `<li>${t.name} -- ${t.author}   
+                        &#8986 ${Math.floor(t.duration/60000)}min${Math.floor(t.duration%60000/1000)}s.
                         <img src="/metafy/img/${t.origin}.png" style="height:16px; width:16px;">`
                 //Display play button only if link for preview is available
                 if(t.url != undefined){
