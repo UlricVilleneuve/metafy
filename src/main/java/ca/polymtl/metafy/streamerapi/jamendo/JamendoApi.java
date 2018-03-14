@@ -37,7 +37,9 @@ public class JamendoApi implements IStreamerApi {
     }
 
     public List<Track> searchTrack(String queryString) {
-        WebTarget resource = client.target("https://api.jamendo.com/v3.0/tracks/?client_id=dacd3181&format=jsonpretty&limit=20&fullcount=true&search=" + queryString);
+        String parsedQuery = parseQuery(queryString);
+
+        WebTarget resource = client.target("https://api.jamendo.com/v3.0/tracks/?client_id=dacd3181&format=jsonpretty&limit=20&fullcount=true&search=" + parsedQuery);
 
         Invocation.Builder request2 = resource.request();
         request2.accept(MediaType.APPLICATION_JSON);
@@ -47,5 +49,12 @@ public class JamendoApi implements IStreamerApi {
         LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Jamendo API, response was " + response);
 
         return response.getTracksReturnDTO().stream().map(track -> new Track(track.getTrackName(), track.getArtistName(), track.getTrackURL(), track.getTrackDuration(), "Jamendo")).collect(Collectors.toList());
+    }
+
+    private String parseQuery(String query)
+    {
+        String[] tokenArray = query.split(" ");
+        String parsedQuery = String.join("+", tokenArray);
+        return parsedQuery;
     }
 }
