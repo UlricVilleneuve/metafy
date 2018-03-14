@@ -41,9 +41,7 @@ public class JamendoApi implements IStreamerApi {
 
         Invocation.Builder request2 = resource.request();
         request2.accept(MediaType.APPLICATION_JSON);
-        //request2.header("Authorization", "Bearer " + response.getAccessToken());
-        //SearchReturnDTO response2 = request2.get(SearchReturnDTO.class);
-        System.out.println(request2.get().readEntity(String.class));
+        
         JamendoSearchRetrieveDTO response = request2.get(JamendoSearchRetrieveDTO.class);
 
         LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Jamendo API, response was " + response);
