@@ -1,17 +1,20 @@
 package ca.polymtl.metafy.streamerapi.authentication;
 
-import ca.polymtl.metafy.ApiKeyLoader;
-import ca.polymtl.metafy.ApiKeyNotFoundException;
 import ca.polymtl.metafy.streamerapi.authentication.dto.SpotifyAuthenticationReturnDTO;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This Singleton is used to authenticate to the Spotify Web API and retrieve the token.
+ * @author wmouchere
+ */
 public class SpotifyAuthenticator implements IAuthenticator {
 
-    private static final SpotifyAuthenticator INSTANCE = new SpotifyAuthenticator();
+    private static SpotifyAuthenticator instance = null;
     private static final Logger LOGGER = Logger.getLogger(SpotifyAuthenticator.class.getName());
 
     private static String apiKey;
@@ -31,8 +34,14 @@ public class SpotifyAuthenticator implements IAuthenticator {
         refreshToken();
     }
 
+    /**
+     * Get the SpotifyAuthenticator service instance. Instance is lazy initialized.
+     * @return The SpotifyAuthenticator service instance
+     */
     public static SpotifyAuthenticator getInstance() {
-        return INSTANCE;
+        if(instance == null)
+            instance = new SpotifyAuthenticator();
+        return instance;
     }
 
     public String getToken() {
@@ -52,6 +61,8 @@ public class SpotifyAuthenticator implements IAuthenticator {
         request.accept(MediaType.APPLICATION_JSON);
         request.header("Authorization", "Basic " + apiKey);
         SpotifyAuthenticationReturnDTO response = request.post(Entity.form(form), SpotifyAuthenticationReturnDTO.class);
+
+        LOGGER.log(Level.INFO, "Refreshed token for Spotify API " + response.getAccessToken());
 
         token = response.getAccessToken();
         tokenExpirationDate = System.currentTimeMillis() + response.getDuration();
