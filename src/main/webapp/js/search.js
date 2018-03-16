@@ -1,10 +1,6 @@
 "use strict"
 let server = "http://localhost:8080/api/";
 
-/*document.getElementById('searchbutton').onclick = function(){
-    submit();
-}
-*/
 document.getElementById('querry').onkeydown = function(e){
     if(e.keyCode == 13){
       submit()
