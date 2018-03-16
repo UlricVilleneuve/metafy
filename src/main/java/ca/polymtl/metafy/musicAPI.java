@@ -7,7 +7,7 @@ public class musicAPI {
 
     public static void main(String[] args) throws Exception {
         //SpotifyApi.getInstance().searchTrack("adele");
-        DeezerApi.getInstance().searchTrack("i need a dollar");
+        DeezerApi.getInstance().searchTrack("adele");
     }
 
 }

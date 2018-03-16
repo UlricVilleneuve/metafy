@@ -15,10 +15,8 @@ public class DeezerTrackReturnDTO {
     @XmlElement(name = "preview")
     private String trackURL;
 
-    @XmlElement(name = "message")
-    private String errorMsg;
 
     public String toString() {
-        return "msg :" + errorMsg + ", title :" + title;
+        return "title: " + title + ", preview URL: "+trackURL+"\n";
     }
 }
