@@ -4,7 +4,6 @@ let server = "http://localhost:8080/api/";
 document.getElementById('searchbutton').onclick = function () {
     let playlistName = document.getElementById('playlistname').value;
     let req = new XMLHttpRequest();
-    //let domParser = new DOMParser();
 
     req.onreadystatechange = function () {
         if (req.readyState !== 4) return;

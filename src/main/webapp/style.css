@@ -34,9 +34,20 @@
 
 #content{
     padding: 25px;
+    padding-bottom: 100px;
 }
 
-a {
+a.unicode{
     text-decoration: none;
     color:inherit;
+    font-size: 24px;
+}
+
+#querry {
+    width:100%;
+}
+
+.api-image{
+    height:24px; 
+    width:24px;
 }
