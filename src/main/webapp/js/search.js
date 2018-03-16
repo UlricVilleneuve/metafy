@@ -27,10 +27,10 @@ document.getElementById('querry').onkeydown = function(e){
             tracks.forEach(function (t) {
                 info += `<li>${t.name} -- ${t.author}   
                         &#8986 ${Math.floor(t.duration/60000)}min${Math.floor(t.duration%60000/1000)}s.
-                        <img src="/metafy/img/${t.origin}.png" style="height:16px; width:16px;">`
+                        <img src="/metafy/img/${t.origin}.png" class="api-image">`
                 //Display play button only if link for preview is available
                 if(t.url != undefined){
-                    info += `<a href=${t.url} class="" target="_blank">&#x25b6;</a>`
+                    info += `<a href=${t.url} class="unicode" target="_blank">&#x25b6;</a>`
                 }
                 info += `</li>`;
             });
