@@ -1,6 +1,6 @@
 let header = `
 <div>
-  <a class="active" href="index.html">Home</a>
+  <a href="index.html">Home</a>
   <a href="search.html">Search</a>
   <a href="playlists.html">Playlists</a>
   <a href="test.html">Test</a>
@@ -13,3 +13,9 @@ let footer = `
 
 document.getElementById('header').innerHTML = header;
 document.getElementById('footer').innerHTML = footer;
+
+// Sets the current page as the active page in the navbar
+var as = document.getElementById('header').getElementsByTagName('a');
+for(var i = 0; i < as.length; i++) {
+    if (as[i].href == location.href){ as[i].className="active"; }
+}
