@@ -1,14 +1,14 @@
 "use strict"
 let server = "http://localhost:8080/api/";
 
-document.getElementById('querry').onkeydown = function(e){
+document.getElementById('query').onkeydown = function(e){
     if(e.keyCode == 13){
       submit()
     }
  };
 
  function submit(){
-    let querry = document.getElementById('querry').value;
+    let query = document.getElementById('query').value;
     let req = new XMLHttpRequest();
 
     req.onreadystatechange = function () {
@@ -17,8 +17,7 @@ document.getElementById('querry').onkeydown = function(e){
         if (req.status === 200) {
             console.log(req.responseType + " " + req.response);
 
-            let tracksDTO = JSON.parse(req.response);
-            let tracks = tracksDTO.tracks;
+            let tracks = JSON.parse(req.response);
             console.log(tracks);
 
             let info = "";
@@ -41,6 +40,6 @@ document.getElementById('querry').onkeydown = function(e){
         }
     };
 
-    req.open("GET", server + "search/" + querry, true);
+    req.open("GET", server + "search/" + query, true);
     req.send();
 }

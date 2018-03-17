@@ -1,5 +1,6 @@
 package ca.polymtl.metafy.music;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +9,33 @@ import java.util.List;
  * This class represents the list of tracks created by the user.
  * It is used by the music player to play each track after an other
  */
-public class Playlist {
+@Entity(name = "PLAYLIST")
+@NamedQueries({
+        @NamedQuery(name = "Playlist.getAll", query = "SELECT p FROM PLAYLIST p"),
+        @NamedQuery(name = "Playlist.getById", query = "SELECT p FROM PLAYLIST p WHERE p.id=:id")
+})
+public class Playlist extends PlaylistElement {
 
+    @Column(nullable = false)
     private String name;
+
+    @OneToMany
+    @JoinTable(
+            name = "PLAYLIST_TRACKS",
+            joinColumns = { @JoinColumn(name = "PLAYLIST_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = { @JoinColumn(name = "TRACK_ID", referencedColumnName = "ID", unique = true)}
+    )
+    /**
+     * We use a JoinTable in the SQL database because we want a simple OneToMany relation (composition), and no reverse references.
+     */
     private List<Track> tracks;
 
     public Playlist(String name){
         this.name = name;
         this.tracks = new ArrayList<Track>();
+    }
+
+    public Playlist() {
     }
 
     /**
@@ -38,4 +58,12 @@ public class Playlist {
         return tracks;
     }
 
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "name='" + name + '\'' +
+                ", tracks=" + tracks +
+                ", id=" + id +
+                '}';
+    }
 }
