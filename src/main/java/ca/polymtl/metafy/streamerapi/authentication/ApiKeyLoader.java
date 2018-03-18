@@ -50,7 +50,7 @@ public final class ApiKeyLoader {
                         key = (String) inner.get("key");
                         break;
                     case "Deezer":
-                        key = (String) inner.get("key");
+                        key = (String) inner.get("token");
                         break;
                     default:
                         continue;
