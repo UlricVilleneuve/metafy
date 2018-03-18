@@ -52,7 +52,11 @@ public class SpotifyApi implements IStreamerApi {
                 .get(SpotifySearchRetrieveDTO.class);
         LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Spotify API, response was " + response);
         return response.getTracksReturnDTO().getItems().stream()
-                .map(item -> new Track(item.getTrackName(), item.getArtists().get(0).getName(), item.getTrackURL(), item.getTrackDuration(), "Spotify"))
+                .map(item -> new Track(item.getTrackName(),
+                        item.getArtists().get(0).getName(),
+                        item.getTrackURL(),
+                        item.getTrackDuration(),
+                        "Spotify"))
                 .collect(Collectors.toList());
     }
 }

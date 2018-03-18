@@ -48,8 +48,6 @@ public class JamendoApi implements IStreamerApi {
     }
 
     public List<Track> searchTrack(String queryString) {
-        String parsedQuery = parseQuery(queryString);
-
         WebTarget resource = client.target("https://api.jamendo.com/v3.0/tracks")
                 .queryParam("client_id", apiKey)
                 .queryParam("format", "json")
@@ -67,17 +65,5 @@ public class JamendoApi implements IStreamerApi {
                         track.getTrackDuration()*1000,
                         "Jamendo"))
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Makes the query String compliant with Jamendo's API functionning
-     * @param query
-     * @return A String that can be used as a query for Jamendo
-     */
-    private String parseQuery(String query)
-    {
-        String[] tokenArray = query.split(" ");
-        String parsedQuery = String.join("+", tokenArray);
-        return parsedQuery;
     }
 }
