@@ -40,8 +40,21 @@ public final class ApiKeyLoader {
             Map map = (Map) yaml.load(is);
             for(Object o : map.keySet()) {
                 String apiId = (String) o;
+                String key = null;
                 Map inner = (Map) map.get(apiId);
-                String key = Base64.encodeAsString(inner.get("user") + ":" + inner.get("key"));
+                switch(apiId) {
+                    case "Spotify":
+                        key = Base64.encodeAsString(inner.get("user") + ":" + inner.get("key"));
+                        break;
+                    case "Jamendo":
+                        key = (String) inner.get("key");
+                        break;
+                    case "Deezer":
+                        key = (String) inner.get("key");
+                        break;
+                    default:
+                        continue;
+                }
                 keys.put(apiId, key);
                 LOGGER.log(Level.INFO, "Loaded key for " + apiId + " : " + key);
             }

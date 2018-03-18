@@ -5,6 +5,7 @@ import ca.polymtl.metafy.music.Track;
 import ca.polymtl.metafy.music.dto.PlaylistDTO;
 import ca.polymtl.metafy.music.dto.TrackDTO;
 import ca.polymtl.metafy.streamerapi.IStreamerApi;
+import ca.polymtl.metafy.streamerapi.jamendo.JamendoApi;
 import ca.polymtl.metafy.streamerapi.spotify.SpotifyApi;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +44,7 @@ public class MetafyResource {
         super();
         apis = new ArrayList<>();
         apis.add(SpotifyApi.getInstance());
+        apis.add(JamendoApi.getInstance());
 
         emf = Persistence.createEntityManagerFactory("metafy");
         em = emf.createEntityManager();
