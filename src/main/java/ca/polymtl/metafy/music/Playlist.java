@@ -36,6 +36,7 @@ public class Playlist extends PlaylistElement {
     }
 
     public Playlist() {
+        this.tracks = new ArrayList<Track>();
     }
 
     /**

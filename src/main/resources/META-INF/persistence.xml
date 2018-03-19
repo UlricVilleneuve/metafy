@@ -11,11 +11,11 @@
         <class>ca.polymtl.metafy.music.Playlist</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:sqlite::memory:" />
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:metafy-database.db" />
+            <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="both" />
             <property name="hibernate.max_fetch_depth" value="3"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.level" value="SEVERE"/>
             <!--<property name = "hibernate.show_sql" value = "true" />-->
         </properties>
     </persistence-unit>
