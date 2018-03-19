@@ -99,7 +99,7 @@ public class MetafyResource {
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP GET request that returns the playlist that has the id passed as a query parameter.
-     * The json return is a serialization of an array of PlaylistDTO
+     * The json return is a serialization of a PlaylistDTO
      */
     public Response getPlaylistById(@PathParam("id") final int id) {
         try {
@@ -108,6 +108,32 @@ public class MetafyResource {
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
         } catch (final Throwable ex) {
             LOGGER.log(Level.SEVERE, "Crash on finding playlist with id " + id, ex);
+            throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
+        }
+    }
+
+    @DELETE
+    @Path("playlist/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * This method is a HTTP DELETE request that removes the playlist that has the id passed as a query parameter.
+     * The json return is a serialization of a PlaylistDTO
+     */
+    public Response removePlaylist(@PathParam("id") final int id) {
+        final EntityTransaction tr = em.getTransaction();
+        try {
+            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
+            tr.begin();
+            //playlist.getTracks().forEach(track -> em.remove(track));
+            em.remove(playlist);
+            tr.commit();
+            LOGGER.log(Level.INFO, "Sucessfully removed playlist with id " + id);
+            return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
+        } catch (final Throwable ex) {
+            if(tr.isActive()) {
+                tr.rollback();
+            }
+            LOGGER.log(Level.SEVERE, "Crash on removing playlist with id " + id, ex);
             throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
         }
     }
@@ -153,6 +179,9 @@ public class MetafyResource {
             LOGGER.log(Level.INFO, "Added track " + track + " to playlist " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
         } catch (final Throwable ex) {
+            if(tr.isActive()) {
+                tr.rollback();
+            }
             LOGGER.log(Level.SEVERE, "Crash on adding track " + trackDTO + " to playlist with id " + id, ex);
             throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
         }
