@@ -61,11 +61,10 @@ function findAllPlaylists() {
 
             let playlists = JSON.parse(req.response);
             console.log(playlists);
-
-            let urls = [];
-
+            
             let info = "";
             playlists.forEach(function (p) {
+                let urls = [];
                 p.tracks.forEach(function (t) {
                     urls.push(t.url);
                 });
