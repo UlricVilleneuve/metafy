@@ -24,7 +24,7 @@ public class SpotifyApi implements IStreamerApi {
     private static SpotifyApi instance = null;
     private static final Logger LOGGER = Logger.getLogger(SpotifyApi.class.getName());
 
-    private IAuthenticator authenticator;
+    private SpotifyAuthenticator authenticator;
     private Client client;
 
     private SpotifyApi() {

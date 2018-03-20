@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author wmouchere
- * This class is a Data Transfer Object used to retrieve search query data from Spotify Web Api.
+ * This class is a Data Transfer Object used to retrieve search query data from Jamendo Web Api.
  */
 @XmlRootElement
 public class JamendoSearchRetrieveDTO {

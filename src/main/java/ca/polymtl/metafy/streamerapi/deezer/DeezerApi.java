@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 
 
 /**
- * Singleton to make HTTP requests to the Deezer API server
- * @author Theo Coulin
+ * Singleton to make HTTP requests to the Spotify API server
+ * @author Theo Coulin, wmouchere
  */
 public class DeezerApi implements IStreamerApi {
 
@@ -32,6 +32,7 @@ public class DeezerApi implements IStreamerApi {
     private Client client;
 
     private static String apiKey;
+    //retrieve API key from loader
     static {
         try {
             apiKey = ApiKeyLoader.getInstance().getApiKey("Deezer");

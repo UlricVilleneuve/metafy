@@ -74,7 +74,7 @@ public class MetafyResource {
     /**
      * This method is a HTTP POST request that creates and saves a new playlist in the system.
      * It expects a json only containing the field "name" of PlaylistDTO
-     * The json returned is a serialisation of the newly created playlist
+     * @return The json response is a serialisation of the newly created playlist
      */
     public Response newPlaylist(final PlaylistDTO playlistDto) {
         final EntityTransaction tr = em.getTransaction();
@@ -99,7 +99,7 @@ public class MetafyResource {
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP GET request that returns the playlist that has the id passed as a query parameter.
-     * The json return is a serialization of a PlaylistDTO
+     * @return The json response is a serialization of a PlaylistDTO
      */
     public Response getPlaylistById(@PathParam("id") final int id) {
         try {
@@ -117,14 +117,13 @@ public class MetafyResource {
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP DELETE request that removes the playlist that has the id passed as a query parameter.
-     * The json return is a serialization of a PlaylistDTO
+     * @return The json response is a serialization of a PlaylistDTO
      */
     public Response removePlaylist(@PathParam("id") final int id) {
         final EntityTransaction tr = em.getTransaction();
         try {
             final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
             tr.begin();
-            //playlist.getTracks().forEach(track -> em.remove(track));
             em.remove(playlist);
             tr.commit();
             LOGGER.log(Level.INFO, "Sucessfully removed playlist with id " + id);
@@ -143,7 +142,7 @@ public class MetafyResource {
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP GET request that returns a list of all Playlists saved in the system.
-     * The json return is a serialization of an array of PlaylistDTO
+     * @return The json response is a serialization of an array of PlaylistDTO
      */
     public Response getPlaylists() {
         try {
@@ -165,7 +164,7 @@ public class MetafyResource {
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP PUT request that adds a Track to the playlist of the given id.
-     * The json returned is the updated playlist.
+     * @return The json response is the updated playlist.
      */
     public Response addTrackToPlaylist(@PathParam("id") final int id, final TrackDTO trackDTO) {
         final EntityTransaction tr = em.getTransaction();
@@ -193,7 +192,7 @@ public class MetafyResource {
     @ApiOperation(value = "Search")
     /**
      * This Method is a HTTP GET request that returns a list of Tracks retrieved from all the services from the apis list.
-     * The json returned is a serialisation of an array of TrackDTO
+     * @return The json response is a serialisation of an array of TrackDTO
      */
     public Response search(@PathParam("query") final String query) {
         return Response.status(Response.Status.OK)

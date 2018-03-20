@@ -18,7 +18,7 @@ public class SpotifyAuthenticator implements IAuthenticator {
     private static final Logger LOGGER = Logger.getLogger(SpotifyAuthenticator.class.getName());
 
     private static String apiKey;
-
+    //retrieve API key from loader
     static {
         try {
             apiKey = ApiKeyLoader.getInstance().getApiKey("Spotify");

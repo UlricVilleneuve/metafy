@@ -4,7 +4,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by thcoud on 18-02-28.
+ * @author thcoud, wmouchere
+ * This class is a Data Transfer Object used to retrieve Track data from Deezer Web Api.
  */
 
 @XmlRootElement
