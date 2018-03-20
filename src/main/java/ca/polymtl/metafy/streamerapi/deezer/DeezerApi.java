@@ -60,7 +60,7 @@ public class DeezerApi implements IStreamerApi {
                 .header("Authorization", "Bearer " + apiKey)
                 .get(DeezerSearchReturnDTO.class);
 
-        LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Deezer API, response was " + response);
+        LOGGER.log(Level.INFO, () -> "Queried \"" + queryString + "\" on Deezer API, response was " + response);
 
         return response.getItems().stream()
                 .map(track -> new Track(track.getTitle(),
