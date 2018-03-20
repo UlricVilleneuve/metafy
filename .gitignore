@@ -7,3 +7,11 @@
 
 # IntelliJ
 out/
+target/
+
+# API Keys
+apikeys.yml
+
+# Databases
+*.db
+*.db-journal
