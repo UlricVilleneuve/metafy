@@ -43,7 +43,8 @@ document.getElementById('query').onkeydown = function(e){
                             <button type="submit" onclick="dropDown(${i})" class="dropbtn pure-button button-add">
                                 <i class="fas fa-plus dropbtn"></i>
                             </button>
-                            <div id="dropdown${i}" class="dropdown-content">`
+                            <div id="dropdown${i}" class="dropdown-content">
+                            <a href="playlists.html" class="button"><i class="fas fa-plus"></i>\tNew playlist</a>`
                             
                 playlists.forEach(function (p) {
                                 info += `<label onclick="add(${i}, ${p.id})">${p.name}</label>`
