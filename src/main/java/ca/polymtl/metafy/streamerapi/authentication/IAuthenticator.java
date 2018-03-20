@@ -1,7 +1,7 @@
 package ca.polymtl.metafy.streamerapi.authentication;
 
 /**
- * @Author wmouchere
+ * @author wmouchere
  * Interface representing
  */
 public interface IAuthenticator {

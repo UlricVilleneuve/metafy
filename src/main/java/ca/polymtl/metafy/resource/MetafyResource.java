@@ -27,8 +27,11 @@ import java.util.logging.Logger;
 
 @Singleton
 @Path("/")
-@Api(value = "api", description = "Core functionnalities")
+@Api(value = "api")
 public class MetafyResource {
+
+    private static final String PLAYLIST_FIND_BY_ID = "Playlist.findById";
+    private static final String PLAYLIST_FIND_ALL = "Playlist.findAll";
 
     private static final Logger LOGGER = Logger.getLogger(MetafyResource.class.getName());
 
@@ -67,15 +70,15 @@ public class MetafyResource {
         super.finalize();
     }
 
-    @POST
-    @Path("playlist/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP POST request that creates and saves a new playlist in the system.
      * It expects a json only containing the field "name" of PlaylistDTO
      * @return The json response is a serialisation of the newly created playlist
      */
+    @POST
+    @Path("playlist/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response newPlaylist(final PlaylistDTO playlistDto) {
         final EntityTransaction tr = em.getTransaction();
         try {
@@ -83,9 +86,9 @@ public class MetafyResource {
             tr.begin();
             em.persist(playlist);
             tr.commit();
-            LOGGER.log(Level.INFO, "Added new playlist " + playlist);
+            LOGGER.log(Level.INFO, () -> "Added new playlist " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch(final Throwable ex) {
+        } catch(final Exception ex) {
             if(tr.isActive()) {
                 tr.rollback();
             }
@@ -94,41 +97,41 @@ public class MetafyResource {
         }
     }
 
-    @GET
-    @Path("playlist/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP GET request that returns the playlist that has the id passed as a query parameter.
      * @return The json response is a serialization of a PlaylistDTO
      */
+    @GET
+    @Path("playlist/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getPlaylistById(@PathParam("id") final int id) {
         try {
-            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
-            LOGGER.log(Level.INFO, "Get playlist with id " + id + ",got " + playlist);
+            final Playlist playlist = em.createNamedQuery(PLAYLIST_FIND_BY_ID, Playlist.class).setParameter("id", id).getSingleResult();
+            LOGGER.log(Level.INFO, () -> "Get playlist with id " + id + ",got " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             LOGGER.log(Level.SEVERE, "Crash on finding playlist with id " + id, ex);
             throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
         }
     }
 
-    @DELETE
-    @Path("playlist/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP DELETE request that removes the playlist that has the id passed as a query parameter.
      * @return The json response is a serialization of a PlaylistDTO
      */
+    @DELETE
+    @Path("playlist/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response removePlaylist(@PathParam("id") final int id) {
         final EntityTransaction tr = em.getTransaction();
         try {
-            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
+            final Playlist playlist = em.createNamedQuery(PLAYLIST_FIND_BY_ID, Playlist.class).setParameter("id", id).getSingleResult();
             tr.begin();
             em.remove(playlist);
             tr.commit();
-            LOGGER.log(Level.INFO, "Sucessfully removed playlist with id " + id);
+            LOGGER.log(Level.INFO, () -> "Sucessfully removed playlist with id " + id);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             if(tr.isActive()) {
                 tr.rollback();
             }
@@ -137,47 +140,47 @@ public class MetafyResource {
         }
     }
 
-    @GET
-    @Path("playlists/")
-    @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP GET request that returns a list of all Playlists saved in the system.
      * @return The json response is a serialization of an array of PlaylistDTO
      */
+    @GET
+    @Path("playlists/")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getPlaylists() {
         try {
-            final List<Playlist> playlists = em.createNamedQuery("Playlist.getAll", Playlist.class).getResultList();
-            LOGGER.log(Level.INFO, "Get all playlists " + playlists);
+            final List<Playlist> playlists = em.createNamedQuery(PLAYLIST_FIND_ALL, Playlist.class).getResultList();
+            LOGGER.log(Level.INFO, () -> "Get all playlists " + playlists);
             return Response.status(Response.Status.OK).entity(playlists.stream()
-                        .map(playlist -> new PlaylistDTO(playlist))
+                        .map(PlaylistDTO::new)
                         .toArray(PlaylistDTO[]::new))
                     .build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             LOGGER.log(Level.SEVERE, "Crash on finding all playlists", ex);
             throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
         }
     }
 
-    @PUT
-    @Path("playlist/{id}/add/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     /**
      * This method is a HTTP PUT request that adds a Track to the playlist of the given id.
      * @return The json response is the updated playlist.
      */
+    @PUT
+    @Path("playlist/{id}/add/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response addTrackToPlaylist(@PathParam("id") final int id, final TrackDTO trackDTO) {
         final EntityTransaction tr = em.getTransaction();
         try {
-            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
+            final Playlist playlist = em.createNamedQuery(PLAYLIST_FIND_BY_ID, Playlist.class).setParameter("id", id).getSingleResult();
             Track track = new Track(trackDTO.getName(), trackDTO.getAuthor(), trackDTO.getUrl(), trackDTO.getDuration(), trackDTO.getOrigin());
             tr.begin();
             em.persist(track);
             playlist.addTrack(track);
             tr.commit();
-            LOGGER.log(Level.INFO, "Added track " + track + " to playlist " + playlist);
+            LOGGER.log(Level.INFO, () -> "Added track " + track + " to playlist " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             if(tr.isActive()) {
                 tr.rollback();
             }
@@ -186,20 +189,20 @@ public class MetafyResource {
         }
     }
 
-    @GET
-    @Path("search/{query}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Search")
     /**
      * This Method is a HTTP GET request that returns a list of Tracks retrieved from all the services from the apis list.
      * @return The json response is a serialisation of an array of TrackDTO
      */
+    @GET
+    @Path("search/{query}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Search")
     public Response search(@PathParam("query") final String query) {
         return Response.status(Response.Status.OK)
                 .entity(apis.stream()
                             .map(api -> api.searchTrack(query))
                             .flatMap(List::stream)
-                            .map(track -> new TrackDTO(track))
+                            .map(TrackDTO::new)
                             .toArray(TrackDTO[]::new))
                 .build();
     }

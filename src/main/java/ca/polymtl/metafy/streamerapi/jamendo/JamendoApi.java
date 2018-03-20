@@ -6,7 +6,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import ca.polymtl.metafy.music.Track;
 
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -61,7 +60,7 @@ public class JamendoApi implements IStreamerApi {
         JamendoSearchRetrieveDTO response = resource.request(MediaType.APPLICATION_JSON)
                 .get(JamendoSearchRetrieveDTO.class);
 
-        LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Jamendo API, response was " + response);
+        LOGGER.log(Level.INFO, () -> "Queried \"" + queryString + "\" on Jamendo API, response was " + response);
 
         return response.getTracksReturnDTO().stream()
                 .map(track -> new Track(track.getTrackName(),

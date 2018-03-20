@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Entity(name = "PLAYLIST")
 @NamedQueries({
-        @NamedQuery(name = "Playlist.getAll", query = "SELECT p FROM PLAYLIST p"),
-        @NamedQuery(name = "Playlist.getById", query = "SELECT p FROM PLAYLIST p WHERE p.id=:id")
+        @NamedQuery(name = "Playlist.findAll", query = "SELECT p FROM PLAYLIST p"),
+        @NamedQuery(name = "Playlist.findById", query = "SELECT p FROM PLAYLIST p WHERE p.id=:id")
 })
 public class Playlist extends PlaylistElement {
 
@@ -32,11 +32,11 @@ public class Playlist extends PlaylistElement {
 
     public Playlist(String name){
         this.name = name;
-        this.tracks = new ArrayList<Track>();
+        this.tracks = new ArrayList<>();
     }
 
     public Playlist() {
-        this.tracks = new ArrayList<Track>();
+        this.tracks = new ArrayList<>();
     }
 
     /**

@@ -24,14 +24,14 @@ public class PlaylistDTO {
 
     // Empty default constructor necessary for JSON marshalling
     public PlaylistDTO() {
-        this.tracks = new ArrayList<TrackDTO>();
+        this.tracks = new ArrayList<>();
     }
 
     public PlaylistDTO(Playlist playlist) {
         this.id = playlist.getId();
         this.name = playlist.getName();
         this.tracks = playlist.getTracks().stream()
-                .map(track -> new TrackDTO(track))
+                .map(TrackDTO::new)
                 .collect(Collectors.toList());
     }
 
