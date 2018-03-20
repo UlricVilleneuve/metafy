@@ -4,12 +4,10 @@ let header = `
   <a href="search.html">Search</a>
   <a href="playlists.html">Playlists</a>
 </div>
-<audio controls class="audioplayer" id="audioplayer"></audio>
 `;
 
 let footer = `
-<p>&copy; Copyright 2018 - Polytechnique Montréal</br>Metafy is a streaming platerform developped during LOG8430 class in Polytechnique Montréal</p>
-`;
+<p>&copy; Copyright 2018 - Polytechnique Montréal</p>`;
 
 document.getElementById('header').innerHTML = header;
 document.getElementById('footer').innerHTML = footer;
