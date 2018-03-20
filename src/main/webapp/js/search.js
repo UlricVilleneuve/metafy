@@ -36,7 +36,7 @@ document.getElementById('query').onkeydown = function(e){
 
                 //Display play button only if link for preview is available
                 if(t.url != undefined){
-                    info += `<a href=${t.url} target="_blank" class="pure-button"><i class="fas fa-play"></i></a>`
+                    info += `<button type="submit" onclick="playTrack('${t.url}')" class="pure-button"><i class="fas fa-play"></i></button>`
                 }
                 
                 info += `<div class="dropdown">
@@ -88,6 +88,15 @@ function findPlaylists(){
 function dropDown(i){
     let id = "dropdown" + i;
     document.getElementById(id).classList.toggle("show");
+}
+
+function playTrack(url) {
+    let info = `<source src=${url} type="audio/mpeg">`
+    let audio = document.getElementById("audioplayer")
+    audio.innerHTML = info
+    audio.pause()
+    audio.load()
+    audio.play()
 }
 
 function add(t, p){
