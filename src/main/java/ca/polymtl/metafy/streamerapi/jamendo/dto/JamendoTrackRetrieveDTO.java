@@ -3,6 +3,10 @@ package ca.polymtl.metafy.streamerapi.jamendo.dto;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
+/**
+ * @author wmouchere
+ * This class is a Data Transfer Object used to retrieve track data from Jamendo Web Api.
+ */
 public class JamendoTrackRetrieveDTO {
 
     @XmlElement(name = "name")

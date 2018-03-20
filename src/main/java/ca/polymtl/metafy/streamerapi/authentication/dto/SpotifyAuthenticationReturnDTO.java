@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @Author wmouchere
- *
+ * This class is a Data Transfer Object used to retrieve authentication token from Spotify Web Api.
  */
 @XmlRootElement
 public class SpotifyAuthenticationReturnDTO {

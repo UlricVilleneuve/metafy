@@ -17,12 +17,17 @@ import ca.polymtl.metafy.streamerapi.authentication.ApiKeyLoader;
 import ca.polymtl.metafy.streamerapi.authentication.ApiKeyNotFoundException;
 import ca.polymtl.metafy.streamerapi.jamendo.dto.JamendoSearchRetrieveDTO;
 
+/**
+ * This class is a Singleton used to make HTTP queries to the Spotify Web API.
+ * @author lerongeur, wmouchere
+ */
 public class JamendoApi implements IStreamerApi {
 
     private static JamendoApi instance = null;
     private static final Logger LOGGER = Logger.getLogger(JamendoApi.class.getName());
 
     private static String apiKey;
+    //retrieve API key from loader
     static {
         try {
             apiKey = ApiKeyLoader.getInstance().getApiKey("Jamendo");
