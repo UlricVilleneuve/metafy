@@ -5,7 +5,6 @@ import ca.polymtl.metafy.streamerapi.IStreamerApi;
 import ca.polymtl.metafy.streamerapi.authentication.ApiKeyLoader;
 import ca.polymtl.metafy.streamerapi.authentication.ApiKeyNotFoundException;
 import ca.polymtl.metafy.streamerapi.deezer.dto.DeezerSearchReturnDTO;
-import ca.polymtl.metafy.streamerapi.jamendo.dto.JamendoSearchRetrieveDTO;
 import org.hibernate.boot.model.source.spi.IdentifierSource;
 
 import javax.ws.rs.client.Client;

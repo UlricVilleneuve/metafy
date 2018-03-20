@@ -2,7 +2,6 @@ package ca.polymtl.metafy.streamerapi.spotify;
 
 import ca.polymtl.metafy.music.Track;
 import ca.polymtl.metafy.streamerapi.IStreamerApi;
-import ca.polymtl.metafy.streamerapi.authentication.IAuthenticator;
 import ca.polymtl.metafy.streamerapi.authentication.SpotifyAuthenticator;
 import ca.polymtl.metafy.streamerapi.spotify.dto.SpotifySearchRetrieveDTO;
 

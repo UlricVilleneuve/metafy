@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** @Author wmouchere
+/** @author wmouchere
  *  This class is a service that loads the api keys used for spotify, deezer and jamendo (possibly others).
  *  Keys are made available through the method getApiKey().
  */
