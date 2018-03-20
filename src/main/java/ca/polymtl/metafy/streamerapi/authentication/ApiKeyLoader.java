@@ -11,15 +11,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** @Author wmouchere
+/** @author wmouchere
  *  This class is a service that loads the api keys used for spotify, deezer and jamendo (possibly others).
  *  Keys are made available through the method getApiKey().
  */
 public final class ApiKeyLoader {
 
-    private static Logger LOGGER = Logger.getLogger(ApiKeyLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ApiKeyLoader.class.getName());
 
-    private final String CONFIG_FILE = "apikeys.yml";
+    private static final String CONFIG_FILE = "apikeys.yml";
     private static final ApiKeyLoader INSTANCE;
 
     private Map<String, String> keys;
@@ -33,14 +33,13 @@ public final class ApiKeyLoader {
     }
 
     private ApiKeyLoader() throws IOException {
-        keys = new HashMap<String, String>();
-        try {
-            InputStream is = new FileInputStream(CONFIG_FILE);
+        keys = new HashMap<>();
+        try (InputStream is = new FileInputStream(CONFIG_FILE)){
             Yaml yaml = new Yaml();
-            Map map = (Map) yaml.load(is);
+            Map map = yaml.load(is);
             for(Object o : map.keySet()) {
                 String apiId = (String) o;
-                String key = null;
+                String key;
                 Map inner = (Map) map.get(apiId);
                 switch(apiId) {
                     case "Spotify":
@@ -56,11 +55,10 @@ public final class ApiKeyLoader {
                         continue;
                 }
                 keys.put(apiId, key);
-                LOGGER.log(Level.INFO, "Loaded key for " + apiId + " : " + key);
+                LOGGER.log(Level.INFO, () -> "Loaded key for " + apiId + " : " + key);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            LOGGER.log(Level.SEVERE, "File " + CONFIG_FILE + " not found. Cannot start without api keys.");
+            LOGGER.log(Level.SEVERE, "File " + CONFIG_FILE + " not found. Cannot start without api keys.", e);
             throw e;
         }
     }
@@ -79,7 +77,7 @@ public final class ApiKeyLoader {
         if(keys.containsKey(apiName)) {
             return keys.get(apiName);
         } else {
-            LOGGER.log(Level.SEVERE, "Api key not found for Api name " + apiName + ".");
+            LOGGER.log(Level.SEVERE, () -> "Api key not found for Api name " + apiName + ".");
             throw new ApiKeyNotFoundException();
         }
     }
