@@ -27,8 +27,11 @@ import java.util.logging.Logger;
 
 @Singleton
 @Path("/")
-@Api(value = "api", description = "Core functionnalities")
+@Api(value = "api")
 public class MetafyResource {
+
+    private static final String PLAYLIST_FIND_BY_ID = "Playlist.findById";
+    private static final String PLAYLIST_FIND_ALL = "Playlist.findAll";
 
     private static final Logger LOGGER = Logger.getLogger(MetafyResource.class.getName());
 
@@ -83,9 +86,9 @@ public class MetafyResource {
             tr.begin();
             em.persist(playlist);
             tr.commit();
-            LOGGER.log(Level.INFO, "Added new playlist " + playlist);
+            LOGGER.log(Level.INFO, () -> "Added new playlist " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch(final Throwable ex) {
+        } catch(final Exception ex) {
             if(tr.isActive()) {
                 tr.rollback();
             }
@@ -103,10 +106,10 @@ public class MetafyResource {
      */
     public Response getPlaylistById(@PathParam("id") final int id) {
         try {
-            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
-            LOGGER.log(Level.INFO, "Get playlist with id " + id + ",got " + playlist);
+            final Playlist playlist = em.createNamedQuery(PLAYLIST_FIND_BY_ID, Playlist.class).setParameter("id", id).getSingleResult();
+            LOGGER.log(Level.INFO, () -> "Get playlist with id " + id + ",got " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             LOGGER.log(Level.SEVERE, "Crash on finding playlist with id " + id, ex);
             throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
         }
@@ -122,13 +125,13 @@ public class MetafyResource {
     public Response removePlaylist(@PathParam("id") final int id) {
         final EntityTransaction tr = em.getTransaction();
         try {
-            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
+            final Playlist playlist = em.createNamedQuery(PLAYLIST_FIND_BY_ID, Playlist.class).setParameter("id", id).getSingleResult();
             tr.begin();
             em.remove(playlist);
             tr.commit();
-            LOGGER.log(Level.INFO, "Sucessfully removed playlist with id " + id);
+            LOGGER.log(Level.INFO, () -> "Sucessfully removed playlist with id " + id);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             if(tr.isActive()) {
                 tr.rollback();
             }
@@ -146,13 +149,13 @@ public class MetafyResource {
      */
     public Response getPlaylists() {
         try {
-            final List<Playlist> playlists = em.createNamedQuery("Playlist.getAll", Playlist.class).getResultList();
-            LOGGER.log(Level.INFO, "Get all playlists " + playlists);
+            final List<Playlist> playlists = em.createNamedQuery(PLAYLIST_FIND_ALL, Playlist.class).getResultList();
+            LOGGER.log(Level.INFO, () -> "Get all playlists " + playlists);
             return Response.status(Response.Status.OK).entity(playlists.stream()
-                        .map(playlist -> new PlaylistDTO(playlist))
+                        .map(PlaylistDTO::new)
                         .toArray(PlaylistDTO[]::new))
                     .build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             LOGGER.log(Level.SEVERE, "Crash on finding all playlists", ex);
             throw new WebApplicationException(Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build());
         }
@@ -169,15 +172,15 @@ public class MetafyResource {
     public Response addTrackToPlaylist(@PathParam("id") final int id, final TrackDTO trackDTO) {
         final EntityTransaction tr = em.getTransaction();
         try {
-            final Playlist playlist = em.createNamedQuery("Playlist.getById",Playlist.class).setParameter("id", id).getSingleResult();
+            final Playlist playlist = em.createNamedQuery(PLAYLIST_FIND_BY_ID, Playlist.class).setParameter("id", id).getSingleResult();
             Track track = new Track(trackDTO.getName(), trackDTO.getAuthor(), trackDTO.getUrl(), trackDTO.getDuration(), trackDTO.getOrigin());
             tr.begin();
             em.persist(track);
             playlist.addTrack(track);
             tr.commit();
-            LOGGER.log(Level.INFO, "Added track " + track + " to playlist " + playlist);
+            LOGGER.log(Level.INFO, () -> "Added track " + track + " to playlist " + playlist);
             return Response.status(Response.Status.OK).entity(new PlaylistDTO(playlist)).build();
-        } catch (final Throwable ex) {
+        } catch (final Exception ex) {
             if(tr.isActive()) {
                 tr.rollback();
             }
@@ -199,7 +202,7 @@ public class MetafyResource {
                 .entity(apis.stream()
                             .map(api -> api.searchTrack(query))
                             .flatMap(List::stream)
-                            .map(track -> new TrackDTO(track))
+                            .map(TrackDTO::new)
                             .toArray(TrackDTO[]::new))
                 .build();
     }

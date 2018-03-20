@@ -60,7 +60,7 @@ public class JamendoApi implements IStreamerApi {
         JamendoSearchRetrieveDTO response = resource.request(MediaType.APPLICATION_JSON)
                 .get(JamendoSearchRetrieveDTO.class);
 
-        LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Jamendo API, response was " + response);
+        LOGGER.log(Level.INFO, () -> "Queried \"" + queryString + "\" on Jamendo API, response was " + response);
 
         return response.getTracksReturnDTO().stream()
                 .map(track -> new Track(track.getTrackName(),

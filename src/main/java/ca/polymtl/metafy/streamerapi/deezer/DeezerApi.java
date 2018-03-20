@@ -5,13 +5,11 @@ import ca.polymtl.metafy.streamerapi.IStreamerApi;
 import ca.polymtl.metafy.streamerapi.authentication.ApiKeyLoader;
 import ca.polymtl.metafy.streamerapi.authentication.ApiKeyNotFoundException;
 import ca.polymtl.metafy.streamerapi.deezer.dto.DeezerSearchReturnDTO;
-import org.hibernate.boot.model.source.spi.IdentifierSource;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class DeezerApi implements IStreamerApi {
 
-    public static DeezerApi instance = null;
+    private static DeezerApi instance = null;
 
     private static final Logger LOGGER = Logger.getLogger(DeezerApi.class.getName());
 

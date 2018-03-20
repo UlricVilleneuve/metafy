@@ -49,7 +49,7 @@ public class SpotifyApi implements IStreamerApi {
         SpotifySearchRetrieveDTO response = resource.request(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + authenticator.getToken())
                 .get(SpotifySearchRetrieveDTO.class);
-        LOGGER.log(Level.INFO, "Queried \"" + queryString + "\" on Spotify API, response was " + response);
+        LOGGER.log(Level.INFO, () -> "Queried \"" + queryString + "\" on Spotify API, response was " + response);
         return response.getTracksReturnDTO().getItems().stream()
                 .map(item -> new Track(item.getTrackName(),
                         item.getArtists().get(0).getName(),
