@@ -3,7 +3,6 @@ let header = `
   <a href="index.html">Home</a>
   <a href="search.html">Search</a>
   <a href="playlists.html">Playlists</a>
-  <a href="test.html">Test</a>
 </div>
 `;
 
