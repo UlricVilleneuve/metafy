@@ -28,16 +28,21 @@ document.getElementById('query').onkeydown = function(e){
             info += `<h1>Results</h1>`
             info += `<ol>`
             tracks.forEach(function (t) {
-                info += `<li>${t.name} -- ${t.author}   
-                        &#8986 ${Math.floor(t.duration/60000)}min${Math.floor(t.duration%60000/1000)}s.
-                        <img src="/metafy/img/${t.origin}.png" class="api-image">`
+                info += `<li>
+                            <img src="/metafy/img/${t.origin}.png" class="api-image">
+                            ${t.name} -- ${t.author}   
+                            <i class="fas fa-clock"></i>
+                            ${Math.floor(t.duration/60000)}min${Math.floor(t.duration%60000/1000)}s.\t`
+
                 //Display play button only if link for preview is available
                 if(t.url != undefined){
                     info += `<a href=${t.url} target="_blank" class="pure-button"><i class="fas fa-play"></i></a>`
                 }
                 
                 info += `<div class="dropdown">
-                            <button type="submit" onclick="dropDown(${i})" class="dropbtn pure-button button-add"><i class="fas fa-plus"></i></button>
+                            <button type="submit" onclick="dropDown(${i})" class="dropbtn pure-button button-add">
+                                <i class="fas fa-plus dropbtn"></i>
+                            </button>
                             <div id="dropdown${i}" class="dropdown-content">`
                             
                 playlists.forEach(function (p) {

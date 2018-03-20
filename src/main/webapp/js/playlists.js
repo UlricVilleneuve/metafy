@@ -45,8 +45,19 @@ function findAllPlaylists() {
                 info += `<input name="data" type="hidden" value=${encodeURIComponent(JSON.stringify(p))} />`
                 info += `<ol>`
                 p.tracks.forEach(function (t) {
-                    info += `<li>${t.name} by ${t.author}, duration : ${t.duration}ms.</li>`;
+                    info += `<li>
+                    <img src="/metafy/img/${t.origin}.png" class="api-image">
+                    ${t.name} -- ${t.author}   
+                    <i class="fas fa-clock"></i>
+                    ${Math.floor(t.duration/60000)}min${Math.floor(t.duration%60000/1000)}s.\t`
+
+                    //Display play button only if link for preview is available
+                    if(t.url != undefined){
+                        info += `<a href=${t.url} target="_blank" class="pure-button"><i class="fas fa-play"></i></a>`
+                    }
+                    info += `</li>`;
                 })
+                
                 info += `</ol>`
                 info += `</div>`
             });
