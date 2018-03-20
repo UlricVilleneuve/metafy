@@ -84,3 +84,8 @@ a.unicode{
 .dropdown-content label:hover {background-color: #ddd}
 
 .show {display:block;}
+
+.playlist-title {
+    font-size: 32px;
+    font-weight: bold;
+}

@@ -40,8 +40,8 @@ function findAllPlaylists() {
             let info = "";
             playlists.forEach(function (p) {
                 info += `<div name="playlist">`
-                info += `<h1>${p.name}</h1>`
-                info += `<input name="button" type="submit" value="Supprimer" class="pure-button" />`
+                info += `<label class="playlist-title">${p.name}\t</label>`
+                info += `<button type="submit" value="Supprimer" class="pure-button button-delete"><i class="fas fa-trash"></i></button>`
                 info += `<input name="data" type="hidden" value=${encodeURIComponent(JSON.stringify(p))} />`
                 info += `<ol>`
                 p.tracks.forEach(function (t) {
@@ -57,9 +57,9 @@ function findAllPlaylists() {
 
         var playlists = document.getElementsByName('playlist');
         for(let i = 0; i < playlists.length; i++) {
-            let data = JSON.parse(decodeURIComponent(playlists[i].getElementsByTagName('input')[1].getAttribute("value")));
+            let data = JSON.parse(decodeURIComponent(playlists[i].getElementsByTagName('input')[0].getAttribute("value")));
             console.log(data);
-            playlists[i].getElementsByTagName('input')[0].onclick = function () {
+            playlists[i].getElementsByTagName('button')[0].onclick = function () {
                 let req2 = new XMLHttpRequest();
                 req2.onreadystatechange = update();
                 req2.open("DELETE", server + "playlist/" + data.id, true);
